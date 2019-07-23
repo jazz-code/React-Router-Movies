@@ -28,7 +28,7 @@ const MovieList = props => {
   return (
     <div className="movie-list">
       {movies.map(movie => (
-        <Link to={`/movies/${props.match.params.id}`} key={movie.id}>
+        <Link to={`/movies/${props.id}`} key={movie.id}>
           <MovieDetails key={movie.id} movie={movie} />
         </Link>
       ))}
