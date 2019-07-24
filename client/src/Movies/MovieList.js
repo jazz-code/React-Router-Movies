@@ -1,35 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MovieList = props => {
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
+
   useEffect(() => {
     const getMovies = () => {
       axios
-        .get('http://localhost:5000/api/movies')
+        .get("http://localhost:5000/api/movies")
         .then(response => {
           setMovies(response.data);
         })
         .catch(error => {
-          console.error('Server Error', error);
+          console.error("Server Error", error);
         });
-    }
-    
+    };
+
     getMovies();
   }, []);
-  
+
+  /* <Link to={"/movies/${id}"}>   {"/movies/${props.match.params.id}"}       <Link to="/movies/:id">*/
+
   return (
     <div className="movie-list">
-      {this.state.movies.map(movie => (
-        <MovieDetails key={movie.id} movie={movie} />
+      {movies.map(movie => (
+        <Link key={movie.id} to={`/movies/${movie.id}`}>
+          <MovieDetails movie={movie} />
+        </Link>
       ))}
     </div>
   );
-}
+};
 
 function MovieDetails({ movie }) {
   const { title, director, metascore, stars } = movie;
   return (
+    // <Link to={"/movies/${id}"}>
     <div className="movie-card">
       <h2>{title}</h2>
       <div className="movie-director">
@@ -46,6 +53,7 @@ function MovieDetails({ movie }) {
         </div>
       ))}
     </div>
+    // </Link>
   );
 }
 
